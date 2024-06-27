@@ -4,23 +4,36 @@ const productsList = [
    { id: 3, name: 'Product 3' },
    { id: 4, name: 'Product 4' },
 ]
+const ProductModel = require('../models/Product')
 
 // @desc Get Products list
 // @route GET /api/v1/products
 exports.getProducts = (req, res, next) => {
-   res.status(200).json({ success: true, data: productsList });
+   ProductModel.find().then(products => {
+      res.status(200).json({ success: true, data: products });
+   })
+   .catch(error => res.status(400).json({ success: false }));
 }
 
 // @desc Get Individual Product
 // @route GET /api/v1/products/:id
 exports.getProduct = (req, res, next) => {
-   res.status(200).json({ success: true, data: productsList });
+   ProductModel.findById(req.params.id).then(product => {
+      product
+      ? res.status(200).json({ success: true, data: product })
+      : res.status(400).json({ success: false })
+   })
+   .catch(error => res.status(400).json({ success: false }));
 }
 
 // @desc Add Product
 // @route POST /api/v1/products
 exports.addProduct = (req, res, next) => {
-   res.status(200).json({ success: true, data: productsList });
+   ProductModel.create(req.body)
+   .then(product => {
+      res.status(201).json({ success: true, data: product });
+   })
+   .catch(error => res.status(400).json({ success: false }));
 }
 
 // @desc Update Individual Product
