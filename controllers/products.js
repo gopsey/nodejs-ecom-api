@@ -1,10 +1,5 @@
-const productsList = [
-   { id: 1, name: 'Product 1' },
-   { id: 2, name: 'Product 2' },
-   { id: 3, name: 'Product 3' },
-   { id: 4, name: 'Product 4' },
-]
 const ProductModel = require('../models/Product')
+const ErrorResponse = require('../utils/errorResponse')
 
 // @desc Get Products list
 // @route GET /api/v1/products
@@ -12,7 +7,7 @@ exports.getProducts = (req, res, next) => {
    ProductModel.find().then(products => {
       res.status(200).json({ success: true, data: products });
    })
-   .catch(error => res.status(400).json({ success: false }));
+      .catch(error => next(error));
 }
 
 // @desc Get Individual Product
@@ -20,30 +15,43 @@ exports.getProducts = (req, res, next) => {
 exports.getProduct = (req, res, next) => {
    ProductModel.findById(req.params.id).then(product => {
       product
-      ? res.status(200).json({ success: true, data: product })
-      : res.status(400).json({ success: false })
+         ? res.status(200).json({ success: true, data: product })
+         : next(new ErrorResponse(`No product found with ID: ${req.params.id}`, 404))
    })
-   .catch(error => res.status(400).json({ success: false }));
+      .catch(error => next(error));
 }
 
 // @desc Add Product
 // @route POST /api/v1/products
 exports.addProduct = (req, res, next) => {
    ProductModel.create(req.body)
-   .then(product => {
-      res.status(201).json({ success: true, data: product });
-   })
-   .catch(error => res.status(400).json({ success: false }));
+      .then(product => {
+         res.status(201).json({ success: true, data: product });
+      })
+      .catch(error => next(error));
 }
 
 // @desc Update Individual Product
 // @route PUT /api/v1/products/:id
 exports.updateProduct = (req, res, next) => {
-   res.status(200).json({ success: true, data: productsList });
+   ProductModel.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+   }).then(product => {
+      product
+         ? res.status(200).json({ success: true, data: product })
+         : next(new ErrorResponse(`No product found with ID: ${req.params.id}`, 404))
+   })
+      .catch(error => next(error));
 }
 
 // @desc Delete Individual Product
 // @route DELETE /api/v1/products/:id
 exports.deleteProduct = (req, res, next) => {
-   res.status(200).json({ success: true, data: productsList });
+   ProductModel.findByIdAndDelete(req.params.id).then(product => {
+      product
+         ? res.status(200).json({ success: true, data: product })
+         : next(new ErrorResponse(`No product found with ID: ${req.params.id}`, 404))
+   })
+      .catch(error => next(error));
 }
