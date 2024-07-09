@@ -4,8 +4,8 @@
   "description": "Backend for Ecom React Application MERN Stack",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=production node server",
-    "dev": "nodemon server"
+    "start": "node server NODE_ENV=production",
+    "dev": "nodemon server NODE_ENV=development"
   },
   "author": "Gopalakrishnan",
   "license": "ISC",

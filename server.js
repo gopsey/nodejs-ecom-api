@@ -8,15 +8,15 @@ const cors = require("cors");
 const products = require('./routes/products');
 const testimonials = require('./routes/testimonials');
 
+// Load environment variables
+dotenv.config({ path: './config/config.env' })
+
 //Connect to Database
 connectDB();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const ENVIRONMENT = process.env.NODE_ENV;
-
-// Load environment variables
-dotenv.config({ path: './config/config.env' })
 
 // To access request body of POST
 app.use(express.json());
