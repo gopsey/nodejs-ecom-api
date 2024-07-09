@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errors');
+const cors = require("cors");
 
 // Importing Route files
 const products = require('./routes/products');
@@ -19,6 +20,7 @@ dotenv.config({ path: './config/config.env' })
 
 // To access request body of POST
 app.use(express.json());
+app.use(cors());
 app.use('/api/v1/products', products)
 app.use('/api/v1/testimonials', testimonials)
 app.use(errorHandler)

@@ -3,7 +3,7 @@ const router = express.Router();
 const {
    getTestimonials,
    addTestimonial,
-} = require('../controllers/Testimonials');
+} = require('../controllers/testimonials');
 
 router
    .route('/')
