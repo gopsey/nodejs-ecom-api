@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config.env' })
 
 const connectDB = async () => {
-   const connection = await mongoose.connect(process.env.MONGO_URI)
+   const connection = await mongoose.connect('mongodb://localhost:27017/ecommern') //process.env.MONGO_URI
    console.log(`MongoDB connected at: ${connection.connection.host}:${connection.connection.port}`)
 }
 
