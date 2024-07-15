@@ -6,12 +6,17 @@ const {
    getProduct,
    getProducts,
    updateProduct,
+   getNewArrivals,
 } = require('../controllers/products');
 
 router
    .route('/')
    .get(getProducts)
    .post(addProduct);
+
+router
+   .route('/new-arrivals')
+   .get(getNewArrivals);
 
 router
    .route('/:id').get(getProduct)

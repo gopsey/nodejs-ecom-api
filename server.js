@@ -7,6 +7,7 @@ const cors = require("cors");
 // Importing Route files
 const products = require('./routes/products');
 const testimonials = require('./routes/testimonials');
+const categories = require('./routes/categories');
 
 // Load environment variables
 dotenv.config({ path: './config/config.env' })
@@ -21,8 +22,9 @@ const ENVIRONMENT = process.env.NODE_ENV;
 // To access request body of POST
 app.use(express.json());
 app.use(cors());
-app.use('/api/v1/products', products)
+app.use(['/api/v1/products', '/api/v1/products/new-arrivals'], products)
 app.use('/api/v1/testimonials', testimonials)
+app.use('/api/v1/categories', categories)
 app.use(errorHandler)
 
 app.listen(PORT, () => console.log(`Server running in ${ENVIRONMENT} on port: ${PORT}`))

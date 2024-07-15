@@ -55,3 +55,12 @@ exports.deleteProduct = (req, res, next) => {
    })
       .catch(error => next(error));
 }
+
+// @desc Get New Arrivals list
+// @route GET /api/v1/new-arrivals
+exports.getNewArrivals = (req, res, next) => {
+   ProductModel.find().sort({ dateAdded: -1 }).limit(4).then(products => {
+      res.status(200).json({ success: true, data: products });
+   })
+      .catch(error => next(error));
+}
