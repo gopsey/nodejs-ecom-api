@@ -7,6 +7,7 @@ const {
    getProducts,
    updateProduct,
    getNewArrivals,
+   getSkuProduct,
 } = require('../controllers/products');
 
 router
@@ -22,5 +23,8 @@ router
    .route('/:id').get(getProduct)
    .put(updateProduct)
    .delete(deleteProduct);
+
+router
+   .route('/:id/:skuId').get(getSkuProduct);
 
 module.exports = router;

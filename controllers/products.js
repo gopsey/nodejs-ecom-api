@@ -64,3 +64,15 @@ exports.getNewArrivals = (req, res, next) => {
    })
       .catch(error => next(error));
 }
+
+// @desc Get Individual Product skuId
+// @route GET /api/v1/products/:id/:skuId
+exports.getSkuProduct = (req, res, next) => {
+   ProductModel.findById(req.params.id).then(product => {
+      const variant = product.variants.find(variant => variant.skuId === req.params.skuId)
+      product
+         ? res.status(200).json({ success: true, data: variant })
+         : next(new ErrorResponse(`No product found with ID: ${req.params.id}`, 404))
+   })
+      .catch(error => next(error));
+}
