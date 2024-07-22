@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cors());
 app.use(['/api/v1/products', '/api/v1/products/new-arrivals'], products)
 app.use('/api/v1/testimonials', testimonials)
-app.use('/api/v1/categories', categories)
+app.use(['/api/v1/categories', '/api/v1/categories/productsBy'], categories)
 app.use(errorHandler)
 
 app.listen(PORT, () => console.log(`Server running in ${ENVIRONMENT} on port: ${PORT}`))

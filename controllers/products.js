@@ -76,3 +76,14 @@ exports.getSkuProduct = (req, res, next) => {
    })
       .catch(error => next(error));
 }
+
+// @desc Get Products by category
+// @desc Added this endpoint here in products controller and not under categories controller since this requires to access ProductModel
+// @route GET /api/v1/categories/productsBy/:category
+exports.getProductsByCategory = (req, res, next) => {
+   const category = req.params.category;
+   ProductModel.find({ category }).then(products => {
+      res.status(200).json({ success: true, data: products });
+   })
+      .catch(error => next(error));
+}

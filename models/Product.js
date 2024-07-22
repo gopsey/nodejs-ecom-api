@@ -1,12 +1,16 @@
 const mongoose = require('mongoose');
 
+const SizeVariantSchema = new mongoose.Schema({
+   sizeName: String,
+   sizeCode: String,
+   unitsCountInStock: { type: Number, min: 0 },
+})
+
 const VariantSchema = new mongoose.Schema({
    skuId: { type: String, required: true },
    colorName: String,
    colorHexCode: String,
-   sizeName: String,
-   sizeCode: String,
-   unitsCountInStock: { type: Number, min: 0 },
+   sizeVariants: { type: [SizeVariantSchema], required: true },
    maximumRetailPrice: { type: Number, min: 0 },
    currencyCode: String,
    discountPercent: { type: Number, min: 0, max: 100 },
