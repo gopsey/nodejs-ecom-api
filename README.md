@@ -7,3 +7,5 @@ mongod --dbpath="E:\Applications\MongoDB\Server\7.0\data"
 mongodb://localhost:27017/
 
 categoryId > productId > variantId > skuId
+
+For hashing password using Bcrypt.js
