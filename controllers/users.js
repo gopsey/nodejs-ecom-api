@@ -1,6 +1,7 @@
 const UserModel = require('../models/User')
 const ErrorResponse = require('../utils/errorResponse')
 const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 // @desc Signup new User
 // @route POST /api/v1/signup
@@ -11,4 +12,24 @@ exports.signup = (req, res, next) => {
          res.status(201).json({ success: true, data: user })
       })
       .catch(error => next(new ErrorResponse(`Unable to signup new user`, 400)))
+}
+
+// @desc Login User
+// @route POST /api/v1/login
+exports.login = (req, res, next) => {
+   UserModel.findOne({ email: req.body.email })
+      .then(user => {
+         // Comparing passwords from user and from DB
+         if (user && bcrypt.compareSync(req.body.password, user.passwordHash)) {
+            const token = jwt.sign({ userId: user._id }, process.env.API_SECRET, { expiresIn: '1d' }) // id, secret and expiration for jwt
+            const response = {
+               user: user.email,
+               authToken: token
+            }
+            res.status(200).json({ success: true, data: response })
+         } else {
+            next(new ErrorResponse(`Email or Password is incorrect!`, 400))
+         }
+      })
+      .catch(error => next(new ErrorResponse(`Email or Password is incorrect!`, 400)))
 }

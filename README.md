@@ -9,3 +9,5 @@ mongodb://localhost:27017/
 categoryId > productId > variantId > skuId
 
 For hashing password using Bcrypt.js
+
+For generating JSON Web Token using jsonwebtoken

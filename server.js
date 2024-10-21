@@ -8,7 +8,7 @@ const cors = require("cors");
 const products = require('./routes/products');
 const testimonials = require('./routes/testimonials');
 const categories = require('./routes/categories');
-const users = require('./routes/users');
+const { signup, login } = require('./controllers/users');
 
 // Load environment variables
 dotenv.config({ path: './config/config.env' })
@@ -26,7 +26,8 @@ app.use(cors());
 app.use(['/api/v1/products', '/api/v1/products/new-arrivals'], products)
 app.use('/api/v1/testimonials', testimonials)
 app.use(['/api/v1/categories', '/api/v1/categories/productsBy'], categories)
-app.use(['/api/v1/signup'], users)
+app.use('/api/v1/signup', signup)
+app.use('/api/v1/login', login)
 app.use(errorHandler)
 
 app.listen(PORT, () => console.log(`Server running in ${ENVIRONMENT} on port: ${PORT}`))
