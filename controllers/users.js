@@ -28,8 +28,8 @@ exports.login = (req, res, next) => {
             }
             res.status(200).json({ success: true, data: response })
          } else {
-            next(new ErrorResponse(`Email or Password is incorrect!`, 400))
+            next(new ErrorResponse(`Email or Password is incorrect!`, 401))
          }
       })
-      .catch(error => next(new ErrorResponse(`Email or Password is incorrect!`, 400)))
+      .catch(error => next(new ErrorResponse(`Internal Server error!`, 500)))
 }

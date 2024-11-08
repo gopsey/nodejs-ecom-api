@@ -6,9 +6,10 @@ const errorHandler = (err, req, res, next) => {
 
    // Mongoose handling wrong ID
    const message = err.name === 'CastError' ? `No product found with ID: ${err.value}` : err;
-
+   const statusCode = error.statusCode || 500
+   
    error = new ErrorResponse(message, 404)
-   res.status(error.statusCode || 500).json({ success: false, error: error.message || 'Server Error' })
+   res.status(statusCode).json({ success: false, error: error.message || 'Server Error' })
 }
 
 module.exports = errorHandler;
