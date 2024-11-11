@@ -1,9 +1,9 @@
+const dotenv = require('dotenv');
+dotenv.config({ path: './config.env' })
 const UserModel = require('../models/User')
 const ErrorResponse = require('../utils/errorResponse')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const dotenv = require('dotenv');
-dotenv.config({ path: './config.env' })
 
 // @desc Signup new User
 // @route POST /api/v1/signup
@@ -23,7 +23,8 @@ exports.login = (req, res, next) => {
       .then(user => {
          // Comparing passwords from user and from DB
          if (user && bcrypt.compareSync(req.body.password, user.passwordHash)) {
-            const token = jwt.sign({ userId: user._id }, process.env.API_SECRET, { expiresIn: '1d' }) // id, secret and expiration for jwt
+            const secret = process.env.API_SECRET
+            const token = jwt.sign({ userId: user._id }, secret, { expiresIn: '1d' }) // id, secret and expiration for jwt
             const response = {
                user: user.email,
                authToken: token
