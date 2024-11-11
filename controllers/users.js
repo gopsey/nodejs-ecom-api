@@ -23,7 +23,7 @@ exports.login = (req, res, next) => {
       .then(user => {
          // Comparing passwords from user and from DB
          if (user && bcrypt.compareSync(req.body.password, user.passwordHash)) {
-            const secret = process.env.API_SECRET
+            const secret = `${process.env.API_SECRET}`
             const token = jwt.sign({ userId: user._id }, secret, { expiresIn: '1d' }) // id, secret and expiration for jwt
             const response = {
                user: user.email,
