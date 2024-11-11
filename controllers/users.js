@@ -2,6 +2,8 @@ const UserModel = require('../models/User')
 const ErrorResponse = require('../utils/errorResponse')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv');
+dotenv.config({ path: './config.env' })
 
 // @desc Signup new User
 // @route POST /api/v1/signup
