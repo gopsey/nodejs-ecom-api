@@ -31,5 +31,8 @@ exports.login = (req, res, next) => {
             next(new ErrorResponse(`Email or Password is incorrect!`, 401))
          }
       })
-      .catch(error => next(new ErrorResponse(`Internal Server error!`, 500)))
+      .catch(error => {
+         console.error('Error in login:', error);
+         next(new ErrorResponse(`Internal Server error!`, 500))
+      })
 }
